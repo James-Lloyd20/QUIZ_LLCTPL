@@ -1,0 +1,15 @@
+{
+  "name": "quiz-llctpl",
+  "version": "1.0.0",
+  "description": "Quiz system with Vercel Web Analytics",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}

@@ -2,7 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta id="themeColorMeta" name="theme-color" content="#f1f5f9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Hệ Thống Ôn Tập Lý Luận Chính Trị - iOS Style</title>
     
     <!-- Favicon hình Tòa nhà học đường -->
@@ -611,16 +614,19 @@
             const perfIcon = document.getElementById('perfIcon');
 
             function setDarkMode(isDark) {
+                const themeMeta = document.getElementById('themeColorMeta');
                 if (isDark) {
                     document.documentElement.classList.add('dark');
                     themeThumb.classList.remove('translate-x-0');
                     themeThumb.classList.add('translate-x-7', 'md:translate-x-6');
                     themeIcon.className = 'fas fa-moon text-indigo-500 text-[10px] md:text-[8px]';
+                    if (themeMeta) themeMeta.setAttribute('content', '#020617');
                 } else {
                     document.documentElement.classList.remove('dark');
                     themeThumb.classList.remove('translate-x-7', 'md:translate-x-6');
                     themeThumb.classList.add('translate-x-0');
                     themeIcon.className = 'fas fa-sun text-amber-500 text-[10px] md:text-[8px]';
+                    if (themeMeta) themeMeta.setAttribute('content', '#f1f5f9');
                 }
             }
 

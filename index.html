@@ -2,8 +2,11 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <!-- Cập nhật viewport-fit=cover để tràn viền tai thỏ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <!-- Màu nền mặc định cho thanh status bar -->
     <meta id="themeColorMeta" name="theme-color" content="#f1f5f9">
+    <!-- Cấu hình Web App cho iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Hệ Thống Ôn Tập Lý Luận Chính Trị - iOS Style</title>
@@ -88,12 +91,20 @@
     </script>
     
     <style>
-        /* CSS CƠ BẢN VÀ TỐI ƯU HÓA */
+        /* CSS CƠ BẢN VÀ TỐI ƯU HÓA SAFARI */
+        /* Tô màu nền cho HTML để xử lý triệt để viền tai thỏ Safari */
+        html { background-color: #f1f5f9; }
+        html.dark { background-color: #020617; }
+
         body { 
             font-family: 'Inter', sans-serif; 
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
+            /* Đảm bảo full viền trên mobile */
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            min-height: 100dvh;
         }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -281,6 +292,7 @@
 </head>
 <body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 relative overflow-x-hidden">
 
+    <!-- MÀN HÌNH DÀNH RIÊNG CHO THIẾT BỊ CŨ -->
     <div id="unsupportedScreen" class="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col items-center pt-16 px-4 pb-10">
         <div class="max-w-2xl w-full text-center">
             <i class="fas fa-exclamation-triangle text-6xl text-red-600 mb-5"></i>
@@ -293,6 +305,7 @@
         </div>
     </div>
 
+    <!-- KHUNG GIAO DIỆN CHÍNH -->
     <div id="mainAppWrapper" class="w-full flex flex-col min-h-screen">
         
         <!-- PHÔNG NỀN BONG BÓNG -->
@@ -338,6 +351,7 @@
             </div>
         </div>
 
+        <!-- VÙNG NỘI DUNG CHÍNH -->
         <div class="relative z-10 flex flex-col min-h-screen">
             <header id="mainHeader" class="w-full relative z-20">
                 <div id="simpleHeaderBg" class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-300 pointer-events-none z-[-1] bg-gradient-to-r from-red-900 via-primary to-red-700"></div>
@@ -435,7 +449,6 @@
                     <h4 class="text-slate-900 dark:text-white font-extrabold mb-6 md:mb-8 tracking-widest uppercase text-xl md:text-2xl opacity-90">LIÊN HỆ HỖ TRỢ</h4>
                     
                     <div class="flex flex-col lg:flex-row justify-center items-stretch lg:items-center gap-3 md:gap-4 text-sm md:text-base font-bold w-full mx-auto max-w-5xl">
-                        <!-- Bổ sung shrink-0 để khóa chết form nút Email và Telegram -->
                         <a href="mailto:wakeful-clots8g@icloud.com" class="shrink-0 w-full lg:w-auto glass-button px-5 sm:px-6 py-4 rounded-2xl lg:rounded-full shadow-md hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 text-slate-800 dark:text-slate-100 flex items-center justify-center">
                             <i class="fas fa-envelope text-rose-600 dark:text-rose-400 mr-2.5 text-lg flex-shrink-0"></i> 
                             <span class="whitespace-nowrap flex-shrink-0">wakeful-clots8g@icloud.com</span>
@@ -511,6 +524,7 @@
         </div>
     </div>
 
+    <!-- LOGIC XỬ LÝ SIÊU TỐI ƯU -->
     <script>
         const courseData = [
             { id: 'all', name: 'Tất cả', icon: 'fa-layer-group' },
@@ -620,13 +634,13 @@
                     themeThumb.classList.remove('translate-x-0');
                     themeThumb.classList.add('translate-x-7', 'md:translate-x-6');
                     themeIcon.className = 'fas fa-moon text-indigo-500 text-[10px] md:text-[8px]';
-                    if (themeMeta) themeMeta.setAttribute('content', '#020617');
+                    if (themeMeta) themeMeta.setAttribute('content', '#020617'); // Đổi màu status bar đen
                 } else {
                     document.documentElement.classList.remove('dark');
                     themeThumb.classList.remove('translate-x-7', 'md:translate-x-6');
                     themeThumb.classList.add('translate-x-0');
                     themeIcon.className = 'fas fa-sun text-amber-500 text-[10px] md:text-[8px]';
-                    if (themeMeta) themeMeta.setAttribute('content', '#f1f5f9');
+                    if (themeMeta) themeMeta.setAttribute('content', '#f1f5f9'); // Đổi màu status bar trắng
                 }
             }
 

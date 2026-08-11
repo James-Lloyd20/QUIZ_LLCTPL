@@ -3,11 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <meta id="themeColorMeta" name="theme-color" content="#f1f5f9">
+    <!-- Meta Theme Color mặc định, sẽ được script bên dưới cập nhật ngay lập tức -->
+    <meta id="themeColorMeta" name="theme-color" content="#f8fafc">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Hệ Thống Ôn Tập Lý Luận Chính Trị - iOS Style</title>
     
+    <!-- KHỞI TẠO DARK MODE NGAY LẬP TỨC ĐỂ FIX LỖI SAFARI -->
+    <script>
+        (function() {
+            try {
+                var isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    document.getElementById('themeColorMeta').setAttribute('content', '#020617'); // Màu nền Slate-950
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    document.getElementById('themeColorMeta').setAttribute('content', '#f8fafc'); // Màu nền Slate-50
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <!-- Favicon hình Tòa nhà học đường -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
     
@@ -18,12 +35,6 @@
     <!-- Phông chữ phong cách Apple -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- VERCEL WEB ANALYTICS (Theo dõi lượng truy cập) -->
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-
     <!-- BLOCK NHẬN DIỆN MÁY CŨ -->
     <script>
         (function() {
@@ -82,23 +93,28 @@
         }
     </script>
     <style>
-        /* CSS CƠ BẢN VÀ TỐI ƯU HÓA SAFARI */
-        /* Tô màu nền cho HTML triệt để để khi Safari nảy trang sẽ lộ ra màu nền chứ không phải màu trắng */
-        html, body { 
-            background-color: #f1f5f9; 
+        /* CSS CƠ BẢN VÀ TỐI ƯU HÓA SAFARI TINTING */
+        html, body {
+            background-color: #f8fafc; /* Đồng bộ tuyệt đối với Light mode */
         }
-        html.dark, html.dark body { 
-            background-color: #020617; 
+        html.dark, html.dark body {
+            background-color: #020617; /* Đồng bộ tuyệt đối với Dark mode */
         }
-
+        
         body { 
             font-family: 'Inter', sans-serif; 
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: transparent;
-            /* Đã xóa overscroll-behavior-y: none; vì nó gây lỗi lộ viền trên iOS Safari */
             min-height: 100vh;
-            min-height: -webkit-fill-available;
             min-height: 100dvh;
+        }
+
+        /* Né vùng an toàn của Tai thỏ và thanh Home (PWA) */
+        #mainAppWrapper {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
         }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -283,13 +299,25 @@
         .settings-collapsed #settingsChevron { transform: rotate(180deg); }
         .settings-collapsed #settingsGearIcon { transform: rotate(90deg); }
     </style>
-
+    
+    <!-- Vercel Web Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script src="/_vercel/insights/script.js"></script>
+    
+    <!-- Vercel Speed Insights -->
+    <script type="module">
+        import { injectSpeedInsights } from 'https://cdn.jsdelivr.net/npm/@vercel/speed-insights@2/+esm';
+        injectSpeedInsights();
+    </script>
 </head>
-<!-- ĐÃ XÓA overflow-x-hidden Ở THẺ BODY ĐỂ FIX LỖI TINTING CỦA SAFARI -->
+
+<!-- ĐÃ XÓA CLASS overflow-x-hidden Ở BODY -->
 <body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 relative">
 
     <!-- MÀN HÌNH DÀNH RIÊNG CHO THIẾT BỊ CŨ -->
-    <div id="unsupportedScreen" class="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col items-center px-4" style="padding-top: max(4rem, env(safe-area-inset-top)); padding-bottom: max(2.5rem, env(safe-area-inset-bottom));">
+    <div id="unsupportedScreen" class="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col items-center pt-16 px-4 pb-10">
         <div class="max-w-2xl w-full text-center">
             <i class="fas fa-exclamation-triangle text-6xl text-red-600 mb-5"></i>
             <h1 class="text-xl md:text-2xl font-bold text-red-700 mb-8 uppercase leading-relaxed border-b-2 border-red-200 pb-6">
@@ -301,7 +329,7 @@
         </div>
     </div>
 
-    <!-- KHUNG GIAO DIỆN CHÍNH (Đã thêm overflow-x-hidden vào đây để thay thế cho body) -->
+    <!-- KHUNG GIAO DIỆN CHÍNH (Đã chuyển overflow-x-hidden vào đây để không làm lỗi Safari) -->
     <div id="mainAppWrapper" class="w-full flex flex-col min-h-screen overflow-x-hidden">
         
         <!-- PHÔNG NỀN BONG BÓNG -->
@@ -314,8 +342,8 @@
             <div class="absolute bottom-[5%] left-[2%] md:left-[5%] text-[45vw] md:text-[30vw] text-yellow-400/60 dark:text-yellow-400/40 animate-float animation-delay-2000 select-none blur-[8px] md:blur-[12px] mix-blend-screen" style="line-height: 1; font-family: sans-serif; text-shadow: 0 0 40px rgba(250,204,21,0.6), 0 0 80px rgba(249,115,22,0.4);">★</div>
         </div>
 
-        <!-- BẢNG CÀI ĐẶT (Được đẩy xuống linh hoạt bằng env safe-area-inset-top để tránh đè Tai Thỏ) -->
-        <div class="fixed right-4 md:right-8 z-[100] flex items-start justify-end pointer-events-none transition-all duration-300" style="top: max(1rem, env(safe-area-inset-top));">
+        <!-- BẢNG CÀI ĐẶT (Đã đẩy top xuống để không đâm vào tai thỏ iOS) -->
+        <div class="fixed top-[max(1rem,env(safe-area-inset-top))] right-4 md:right-8 z-[100] flex items-start justify-end pointer-events-none mt-2">
             <div id="settingsTooltip" class="mr-3 mt-1 glass-tooltip px-3.5 py-3 md:px-4 md:py-3.5 rounded-2xl text-[11px] md:text-xs font-semibold transition-all duration-500 opacity-0 translate-x-4 relative w-max max-w-[200px] sm:max-w-[220px] md:max-w-[280px] pointer-events-auto leading-relaxed text-slate-800 dark:text-slate-200 z-[101]">
                 Nếu bị Khựng Lag, bạn có thể bật chế độ "Đơn giản" lên để trải nghiệm được mượt mà hơn nhé :D
             </div>
@@ -347,12 +375,12 @@
             </div>
         </div>
 
-        <!-- VÙNG NỘI DUNG CHÍNH (Áp dụng safe-area-inset-top để tránh đè Header) -->
+        <!-- VÙNG NỘI DUNG CHÍNH -->
         <div class="relative z-10 flex flex-col min-h-screen">
             <header id="mainHeader" class="w-full relative z-20">
                 <div id="simpleHeaderBg" class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-300 pointer-events-none z-[-1] bg-gradient-to-r from-red-900 via-primary to-red-700"></div>
                 
-                <div class="pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto w-full transition-colors duration-300" style="padding-top: calc(5rem + env(safe-area-inset-top));">
+                <div class="pt-24 md:pt-28 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto w-full transition-colors duration-300">
                     <div class="inline-flex p-3 md:p-4 glass-panel rounded-full mb-4 md:mb-6 transform scale-90 md:scale-100">
                         <i class="fas fa-university text-3xl md:text-4xl text-amber-500 dark:text-amber-400 drop-shadow-md transition-colors duration-300"></i>
                     </div>
@@ -439,9 +467,9 @@
                 </div>
             </main>
 
-            <!-- FOOTER (Áp dụng safe-area-inset-bottom để đẩy nội dung lên tránh đè thanh cuộn Home iOS) -->
-            <footer class="mt-auto border-t border-white/30 dark:border-white/10 glass-panel !rounded-none !border-x-0 !border-b-0 pt-8 md:pt-12 px-4 sm:px-6 text-center w-full" style="padding-bottom: max(3rem, calc(2rem + env(safe-area-inset-bottom)));">
-                <div class="max-w-6xl mx-auto">
+            <!-- FOOTER -->
+            <footer class="mt-auto border-t border-white/30 dark:border-white/10 glass-panel !rounded-none !border-x-0 !border-b-0 py-8 md:py-12 text-center pb-12 sm:pb-12 w-full">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6">
                     <h4 class="text-slate-900 dark:text-white font-extrabold mb-6 md:mb-8 tracking-widest uppercase text-xl md:text-2xl opacity-90">LIÊN HỆ HỖ TRỢ</h4>
                     
                     <div class="flex flex-col lg:flex-row justify-center items-stretch lg:items-center gap-3 md:gap-4 text-sm md:text-base font-bold w-full mx-auto max-w-5xl">
@@ -636,12 +664,14 @@
                     themeThumb.classList.remove('translate-x-7', 'md:translate-x-6');
                     themeThumb.classList.add('translate-x-0');
                     themeIcon.className = 'fas fa-sun text-amber-500 text-[10px] md:text-[8px]';
-                    if (themeMeta) themeMeta.setAttribute('content', '#f1f5f9');
+                    if (themeMeta) themeMeta.setAttribute('content', '#f8fafc');
                 }
             }
 
-            const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            // Đồng bộ trạng thái hiện tại (do script ở thẻ <head> đã gán sẵn class)
+            const isDark = document.documentElement.classList.contains('dark');
             setDarkMode(isDark);
+            
             themeToggleBtn.addEventListener('click', () => {
                 const newTheme = !document.documentElement.classList.contains('dark');
                 setDarkMode(newTheme);

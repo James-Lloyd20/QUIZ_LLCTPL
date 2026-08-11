@@ -15,7 +15,18 @@
     <!-- Phông chữ phong cách Apple -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- BLOCK NHẬN DIỆN MÁY CŨ -->
+    <!-- VERCEL WEB ANALYTICS (Không cần NPM) -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <!-- VERCEL SPEED INSIGHTS (Không cần NPM) -->
+    <script>
+        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+    
     <script>
         (function() {
             function isOldDevice() {
@@ -72,6 +83,7 @@
             }
         }
     </script>
+    
     <style>
         /* CSS CƠ BẢN VÀ TỐI ƯU HÓA */
         body { 
@@ -263,22 +275,9 @@
         .settings-collapsed #settingsChevron { transform: rotate(180deg); }
         .settings-collapsed #settingsGearIcon { transform: rotate(90deg); }
     </style>
-    
-    <!-- Vercel Web Analytics -->
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    
-    <!-- Vercel Speed Insights -->
-    <script type="module">
-        import { injectSpeedInsights } from 'https://cdn.jsdelivr.net/npm/@vercel/speed-insights@2/+esm';
-        injectSpeedInsights();
-    </script>
 </head>
 <body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 relative overflow-x-hidden">
 
-    <!-- MÀN HÌNH DÀNH RIÊNG CHO THIẾT BỊ CŨ -->
     <div id="unsupportedScreen" class="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col items-center pt-16 px-4 pb-10">
         <div class="max-w-2xl w-full text-center">
             <i class="fas fa-exclamation-triangle text-6xl text-red-600 mb-5"></i>
@@ -291,7 +290,6 @@
         </div>
     </div>
 
-    <!-- KHUNG GIAO DIỆN CHÍNH -->
     <div id="mainAppWrapper" class="w-full flex flex-col min-h-screen">
         
         <!-- PHÔNG NỀN BONG BÓNG -->
@@ -337,7 +335,6 @@
             </div>
         </div>
 
-        <!-- VÙNG NỘI DUNG CHÍNH -->
         <div class="relative z-10 flex flex-col min-h-screen">
             <header id="mainHeader" class="w-full relative z-20">
                 <div id="simpleHeaderBg" class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-300 pointer-events-none z-[-1] bg-gradient-to-r from-red-900 via-primary to-red-700"></div>
@@ -389,7 +386,7 @@
                 </div>
 
                 <div class="mt-16 md:mt-20 flex flex-wrap -mx-3 md:-mx-4">
-                    <!-- KHỐI 1: CỘNG ĐỒNG ÔN TẬP (Chuyển lên trước, mô tả kênh thông báo 1 chiều) -->
+                    <!-- KHỐI 1: CỘNG ĐỒNG ÔN TẬP -->
                     <div class="w-full lg:w-1/2 px-3 md:px-4 mb-6 lg:mb-0 flex">
                         <div class="w-full glass-panel rounded-[2rem] p-6 md:p-8 flex flex-col justify-between hover:-translate-y-1 block group">
                             <div>
@@ -408,7 +405,7 @@
                         </div>
                     </div>
                     
-                    <!-- KHỐI 2: BÁO CÁO LỖI QUIZIZZ (Chuyển ra phía sau) -->
+                    <!-- KHỐI 2: BÁO CÁO LỖI QUIZIZZ -->
                     <div class="w-full lg:w-1/2 px-3 md:px-4 flex">
                         <div class="w-full glass-panel rounded-[2rem] p-6 md:p-8 flex flex-col justify-between hover:-translate-y-1 group block">
                             <div>
@@ -511,7 +508,6 @@
         </div>
     </div>
 
-    <!-- LOGIC XỬ LÝ SIÊU TỐI ƯU -->
     <script>
         const courseData = [
             { id: 'all', name: 'Tất cả', icon: 'fa-layer-group' },
@@ -538,7 +534,7 @@
                 icon: 'fa-star',
                 quizzes: [
                     { title: 'Tư tưởng Hồ Chí Minh (Giữa kì)', questions: 'Giữa kì', desc: 'Mẹo ôn: mọi người nên ôn Flashcards trước, ôn quiz sau sẽ giúp mọi người dễ dàng ghi nhớ hơn!', flashcardLink: 'https://wayground.com/join?gc=37715241', quizLink: 'https://wayground.com/join?gc=18578729' },
-                    { title: 'Tư tưởng Hồ Chí Minh (Cuối kì)', questions: 'Cuối kì', desc: 'Lưu ý: Do tài khoản của Ad hết gói Super nên đợt này không thể tạo Flashcards. Mọi người chịu khó cày trực tiếp trên Quizizz nha! 🥲', history: ['10/08/26: Sửa lỗi sai đáp án Quizizz'], flashcardLink: '#', quizLink: 'https://wayground.com/join?gc=24198233' }
+                    { title: 'Tư tưởng Hồ Chí Minh (Cuối kì)', questions: 'Cuối kì', desc: 'Lưu ý: Do tài khoản của Ad hết gói Super nên đợt này không thể tạo Flashcards. Mọi người chịu khó cày trực tiếp trên Quizizz nha! 🥲', history: ['10/08/26: Sửa lỗi sai đáp án Quizizz', '11/08/26: Sửa Câu 11 - Chương 3 bị sai đáp án'], flashcardLink: '#', quizLink: 'https://wayground.com/join?gc=20311641' }
                 ]
             },
             {
